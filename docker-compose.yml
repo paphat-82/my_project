@@ -1,0 +1,44 @@
+version: "3.8"
+services:
+  nginx:
+    build: ./nginx
+    container_name: nginx_container
+    ports:
+      - "80:80" # เปิด port 80 ของ nginx เป็น Public tier
+    networks:
+      - public
+      - private
+    depends_on:
+      - app
+
+  app:
+    build: ./app
+    container_name: nodejs_api_container
+    environment:
+      - NODE_ENV=development
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=123
+      - DATABASE_NAME=testdb
+    networks:
+      - private
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    container_name: postgres_container
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_DB=testdb
+    volumes:
+      - ./db-data:/var/lib/postgresql/data # Attach Database Volume
+    networks:
+      - private
+
+networks:
+  public:
+  private:
+    internal: true

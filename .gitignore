@@ -1,0 +1,21 @@
+# Node.js
+node_modules/
+
+# Logs
+*.log
+
+# Environment variable files
+.env
+
+# Docker
+.docker/
+
+# PostgreSQL Data (Database files)
+db-data/
+
+# IDE/Editor settings
+.vscode/
+.idea/
+
+# Operating System files
+.DS_Store
